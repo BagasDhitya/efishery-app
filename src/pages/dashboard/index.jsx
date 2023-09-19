@@ -47,9 +47,8 @@ const Dashboard = () => {
         <div
           style={{
             margin: "auto",
-            padding: "1rem",
-            marginTop: "5rem",
-            minHeight: "calc(100% - 5rem)",
+            width: "100vh",
+            height: "100vh",
           }}
         >
           {path.includes("list_comodity") ? (
