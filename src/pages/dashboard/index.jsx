@@ -1,7 +1,7 @@
-const Dashboard = () => {
-  return (
-    <div>Dashboard</div>
-  )
-}
+import Layout from "../../components/Layout";
 
-export default Dashboard
+const Dashboard = () => {
+  return <Layout>Dashboard</Layout>;
+};
+
+export default Dashboard;
