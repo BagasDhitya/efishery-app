@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import Login from "../pages/login";
 import Dashboard from "../pages/dashboard";
@@ -11,9 +11,13 @@ const App = () => {
       <Routes>
         <Route path="efishery/auth/login" element={<Login />} />
         <Route path="/efishery/" element={<Dashboard />}>
-          <Route path="list_comodity" element={<ListComodity />} />
+          <Route index path="list_comodity" element={<ListComodity />} />
           <Route path="list_city" element={<ListCity />} />
         </Route>
+        <Route
+          path="/"
+          element={<Navigate to="/efishery/list_comodity" replace={true} />}
+        />
       </Routes>
     </BrowserRouter>
   );
