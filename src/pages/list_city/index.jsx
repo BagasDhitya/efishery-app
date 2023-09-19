@@ -4,11 +4,14 @@ import axios from "axios";
 import Layout from "../../components/Layout";
 import Table from "../../components/Table";
 import Pagination from "../../components/Pagination";
+import Input from "../../components/Input";
 
-const ListComodity = () => {
+const ListCity = () => {
   const [cities, setCities] = useState([]);
+  const [search, setSearch] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [citiesPerPage] = useState(10);
+  const [filteredCities, setFilteredCities] = useState([]);
 
   const headers = ["Province", "City"];
 
@@ -21,13 +24,37 @@ const ListComodity = () => {
     }
   };
 
+  const searchCities = () => {
+    const searchTerm = search?.toLowerCase();
+    if (!searchTerm) {
+      setFilteredCities([]);
+      return;
+    }
+
+    const filtered = cities.filter((cities) => {
+      const { province, city } = cities;
+      return (
+        province?.toLowerCase().includes(searchTerm) ||
+        city?.toLowerCase().includes(searchTerm)
+      );
+    });
+
+    setFilteredCities(filtered);
+  };
+
   useEffect(() => {
     getData();
   }, []);
 
-  const indexOfLastComodity = currentPage * citiesPerPage;
-  const indexOfFirstComodity = indexOfLastComodity - citiesPerPage;
-  const currentCities = cities.slice(indexOfFirstComodity, indexOfLastComodity);
+  useEffect(() => {
+    searchCities();
+  }, [search, cities]);
+
+  const indexOfLastCities = currentPage * citiesPerPage;
+  const indexOfFirstCities = indexOfLastCities - citiesPerPage;
+  const currentCities = filteredCities.length
+    ? filteredCities.slice(indexOfFirstCities, indexOfLastCities)
+    : cities.slice(indexOfFirstCities, indexOfLastCities);
 
   const onPageChange = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -43,11 +70,33 @@ const ListComodity = () => {
           marginLeft: "40%",
         }}
       >
-        <Pagination
-          currentPage={currentPage}
-          totalPages={Math.ceil(cities.length / citiesPerPage)}
-          onPageChange={onPageChange}
-        />
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            columnGap: "100px",
+            width: "100%",
+          }}
+        >
+          <div
+            style={{
+              width: "50%",
+            }}
+          >
+            <Input
+              id="search-city"
+              placeholder="Search for city or province..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={Math.ceil(cities.length / citiesPerPage)}
+            onPageChange={onPageChange}
+          />
+        </div>
         <div
           style={{
             width: "100vh",
@@ -57,11 +106,7 @@ const ListComodity = () => {
         >
           <Table
             headers={headers}
-            data={currentCities.map((city) =>
-              city?.province && city?.city
-                ? [city?.province, city?.city]
-                : ["-", "-"]
-            )}
+            data={currentCities.map((city) => [city?.province, city?.city])}
             themeColor="theme-green"
           />
         </div>
@@ -70,4 +115,4 @@ const ListComodity = () => {
   );
 };
 
-export default ListComodity;
+export default ListCity;
