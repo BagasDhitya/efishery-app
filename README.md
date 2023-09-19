@@ -1,8 +1,55 @@
-# React + Vite
+# eFishery Web App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+eFishery Web App is a web application designed to streamline fish farming management. This README provides installation instructions for the project.
 
-Currently, two official plugins are available:
+## Table of Contents
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Prerequisites
+
+Before you begin, ensure you have met the following requirements:
+
+- **Node.js**: Make sure you have Node.js installed. You can download it from [nodejs.org](https://nodejs.org/).
+
+- **Yarn (optional)**: Although you can use npm for package management, Yarn is recommended. You can install Yarn with:
+
+  ```bash
+  npm install -g yarn
+
+## Installation
+
+To install and set up the eFishery Web App, follow these steps:
+
+1. **Clone the repository:**
+   Use the following command to make a local copy of the project
+   
+   ```bash
+   git clone https://github.com/BagasDhitya/efishery-app.git
+   
+3. **Change your working directory:**
+   Navigate to the project folder using the cd command
+
+    ```bash
+    cd efishery-app
+
+4. **Install project dependencies:**
+   Use either Yarn or npm to install the required packages and libraries. If you prefer Yarn, run:
+   
+     ```bash
+    yarn install
+
+    ```bash
+    npm install
+
+6. **Start the development server:**
+
+     ```bash
+    npm run dev
+
+8. **Open your web browser:**
+   Finally, open your web browser and navigate to http://localhost:3000 to access the eFishery Web App.
