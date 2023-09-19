@@ -17,8 +17,11 @@ const Sidebar = () => {
     <div className={`sidebar ${toggle === true ? "active" : ""}`}>
       <div className="sidebar-toggle">
         <h2
-          style={{ display: `${toggle === false ? "none" : ""}` }}
-          onClick={() => navigateTo("/admin/")}
+          style={{
+            display: `${toggle === false ? "none" : ""}`,
+            position: "relative",
+          }}
+          onClick={() => navigateTo("list_comodity")}
         >
           Dashboard
         </h2>
@@ -29,14 +32,12 @@ const Sidebar = () => {
       <nav className={`sidebar-nav`}>
         <ul>
           <li>
-            <button onClick={() => navigateTo("/admin/list_kuisioner")}>
+            <button onClick={() => navigateTo("list_comodity")}>
               List Comodity
             </button>
           </li>
           <li>
-            <button onClick={() => navigateTo("/admin/list_pasien")}>
-              List City
-            </button>
+            <button onClick={() => navigateTo("list_city")}>List City</button>
           </li>
         </ul>
       </nav>

@@ -11,6 +11,7 @@
   .header-left {
     flex: 1;
     display: flex;
+    justify-content: center;
     align-items: center;
   }
   
@@ -19,6 +20,7 @@
     padding-left: 1.5rem;
     font-size: 1.125rem;
     color: #0d9488;
+    display: flex;
   }
   
   .header-right {
