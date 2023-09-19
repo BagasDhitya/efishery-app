@@ -43,7 +43,6 @@ To install and set up the eFishery Web App, follow these steps:
      ```bash
     yarn install
 
-    ```bash
     npm install
 
 6. **Start the development server:**
