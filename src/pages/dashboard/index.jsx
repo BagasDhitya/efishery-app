@@ -20,6 +20,7 @@ const Dashboard = () => {
   useEffect(() => {
     getPage();
   }, []);
+
   return (
     <section
       style={{

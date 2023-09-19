@@ -50,6 +50,9 @@
             background-color: #0f766e;
             font-weight: 600;
           }
+          &:focus {
+            outline: none;
+          }
         }
       }
     }
