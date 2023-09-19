@@ -13,16 +13,27 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    Swal.fire({
-      icon: "success",
-      title: "Success",
-      text: `Welcome, ${username}`,
-      confirmButtonText: "OK",
-    }).then((res) => {
-      if (res.isConfirmed) {
-        navigate("/");
-      }
-    });
+    if (username !== "" && password !== "") {
+      Swal.fire({
+        icon: "success",
+        title: "Success",
+        text: `Welcome, ${username}`,
+        confirmButtonText: "OK",
+        confirmButtonColor: "#0d9488",
+      }).then((res) => {
+        if (res.isConfirmed) {
+          navigate("/");
+        }
+      });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Failed",
+        text: `Username/password cannot be empty`,
+        confirmButtonText: "OK",
+        confirmButtonColor: "#0d9488",
+      });
+    }
   };
 
   return (
