@@ -8,18 +8,20 @@ import Input from "../../components/Input";
 
 const ListCity = () => {
   const [cities, setCities] = useState([]);
-  const [search, setSearch] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [citiesPerPage] = useState(10);
   const [filteredCities, setFilteredCities] = useState([]);
   const [selectedProvince, setSelectedProvince] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
+  const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [citiesPerPage] = useState(10);
 
   const headers = ["Province", "City"];
 
   const getData = async () => {
     try {
       const response = await axios.get("option_area");
+      setLoading(true);
       setCities(response?.data);
     } catch (error) {
       console.log(error);
@@ -82,112 +84,130 @@ const ListCity = () => {
 
   return (
     <Layout>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-          marginLeft: "40%",
-          marginTop: "10%",
-        }}
-      >
+      {loading === true ? (
         <div
           style={{
             display: "flex",
+            flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            columnGap: "20px",
-            width: "100%",
+            height: "100vh",
+            marginLeft: "40%",
+            marginTop: "10%",
           }}
         >
           <div
             style={{
-              width: "25%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              columnGap: "20px",
+              width: "100%",
             }}
           >
-            <select
-              id="select-province"
+            <div
               style={{
-                backgroundColor: "#fff",
-                borderColor: "#0d9488",
-                borderRadius: "5px",
-                height: "35px",
-                width: "140px",
-                color: "#0d9488",
+                width: "25%",
               }}
-              value={selectedProvince}
-              onChange={handleProvinceChange}
             >
-              <option value="">Filter by Province</option>
-              {uniqueProvinces.map((province) => (
-                <option key={province} value={province}>
-                  {province}
-                </option>
-              ))}
-            </select>
+              <select
+                id="select-province"
+                style={{
+                  backgroundColor: "#fff",
+                  borderColor: "#0d9488",
+                  borderRadius: "5px",
+                  height: "35px",
+                  width: "140px",
+                  color: "#0d9488",
+                }}
+                value={selectedProvince}
+                onChange={handleProvinceChange}
+              >
+                <option value="">Filter by Province</option>
+                {uniqueProvinces.map((province) => (
+                  <option key={province} value={province}>
+                    {province}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div
+              style={{
+                width: "25%",
+              }}
+            >
+              <select
+                id="select-cities"
+                style={{
+                  backgroundColor: "#fff",
+                  borderColor: "#0d9488",
+                  borderRadius: "5px",
+                  height: "35px",
+                  width: "140px",
+                  color: "#0d9488",
+                }}
+                value={selectedCity}
+                onChange={handleCityChange}
+              >
+                <option value="">Filter by City</option>
+                {uniqueCities.map((city) => (
+                  <option key={city} value={city}>
+                    {city}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div
+              style={{
+                width: "25%",
+              }}
+            >
+              <Input
+                id="search-city"
+                placeholder="Search for city or province..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
           </div>
           <div
             style={{
-              width: "25%",
+              width: "100vh",
+              maxWidth: "800px",
+              marginTop: "20px",
             }}
           >
-            <select
-              id="select-cities"
-              style={{
-                backgroundColor: "#fff",
-                borderColor: "#0d9488",
-                borderRadius: "5px",
-                height: "35px",
-                width: "140px",
-                color: "#0d9488",
-              }}
-              value={selectedCity}
-              onChange={handleCityChange}
-            >
-              <option value="">Filter by City</option>
-              {uniqueCities.map((city) => (
-                <option key={city} value={city}>
-                  {city}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div
-            style={{
-              width: "25%",
-            }}
-          >
-            <Input
-              id="search-city"
-              placeholder="Search for city or province..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
+            <Table
+              headers={headers}
+              data={currentCities.map((city) => [city?.province, city?.city])}
+              themeColor="theme-green"
             />
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={onPageChange}
+              />
+            </div>
           </div>
         </div>
+      ) : (
         <div
           style={{
-            width: "100vh",
-            maxWidth: "800px",
-            marginTop: "20px",
+            display: "flex",
+            fontSize: "24px",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+            marginLeft: "40%",
+            marginTop: "10%",
+            color: "#0d9488",
           }}
         >
-          <Table
-            headers={headers}
-            data={currentCities.map((city) => [city?.province, city?.city])}
-            themeColor="theme-green"
-          />
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={onPageChange}
-            />
-          </div>
+          <p>Loading data list city ...</p>
         </div>
-      </div>
+      )}
     </Layout>
   );
 };

@@ -8,16 +8,18 @@ import Input from "../../components/Input";
 
 const ListComodity = () => {
   const [comodities, setComodities] = useState([]);
-  const [search, setSearch] = useState();
+  const [filteredComodities, setFilteredComodities] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [comoditiesPerPage] = useState(10);
-  const [filteredComodities, setFilteredComodities] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState();
 
   const headers = ["Comodity", "Price", "City", "Province"];
 
   const getData = async () => {
     try {
       const response = await axios.get("list");
+      setLoading(true);
       setComodities(response?.data);
     } catch (error) {
       console.log(error);
@@ -62,62 +64,80 @@ const ListComodity = () => {
 
   return (
     <Layout>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-          marginLeft: "40%",
-        }}
-      >
+      {loading === true ? (
         <div
           style={{
             display: "flex",
+            flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            columnGap: "100px",
-            width: "100%",
+            height: "100vh",
+            marginLeft: "40%",
           }}
         >
           <div
             style={{
-              width: "50%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              columnGap: "100px",
+              width: "100%",
             }}
           >
-            <Input
-              id="search-comodity"
-              placeholder="Search for comodity, price, etc..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
+            <div
+              style={{
+                width: "50%",
+              }}
+            >
+              <Input
+                id="search-comodity"
+                placeholder="Search for comodity, price, etc..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
+            <Pagination
+              currentPage={currentPage}
+              totalPages={Math.ceil(comodities.length / comoditiesPerPage)}
+              onPageChange={onPageChange}
             />
           </div>
-          <Pagination
-            currentPage={currentPage}
-            totalPages={Math.ceil(comodities.length / comoditiesPerPage)}
-            onPageChange={onPageChange}
-          />
+          <div
+            style={{
+              width: "100vh",
+              maxWidth: "800px",
+              marginTop: "20px",
+            }}
+          >
+            <Table
+              headers={headers}
+              data={currentComodities.map((comodity) => [
+                comodity?.komoditas,
+                comodity?.price,
+                comodity?.area_kota,
+                comodity?.area_provinsi,
+              ])}
+              themeColor="theme-green"
+            />
+          </div>
         </div>
+      ) : (
         <div
           style={{
-            width: "100vh",
-            maxWidth: "800px",
-            marginTop: "20px",
+            display: "flex",
+            fontSize: "24px",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+            marginLeft: "40%",
+            marginTop: "10%",
+            color: "#0d9488",
           }}
         >
-          <Table
-            headers={headers}
-            data={currentComodities.map((comodity) => [
-              comodity?.komoditas,
-              comodity?.price,
-              comodity?.area_kota,
-              comodity?.area_provinsi,
-            ])}
-            themeColor="theme-green"
-          />
+          <p>Loading data list comodity ...</p>
         </div>
-      </div>
+      )}
     </Layout>
   );
 };
