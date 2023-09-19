@@ -1,0 +1,41 @@
+.dynamic-table {
+  &.theme-green {
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      border-radius: 10px;
+
+      th, td {
+        background-color: #fff;
+        padding: 8px;
+        text-align: center;
+        border: 1px solid #0d9488;
+      }
+
+      th {
+        background-color: #0d9488;
+        color: #fff;
+      }
+    }
+  }
+
+  &.theme-red {
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      border-radius: 10px;
+
+      th, td {
+        background-color: #fff;
+        padding: 8px;
+        text-align: center;
+        border: 1px solid #ff0000;
+      }
+
+      th {
+        background-color: #ff0000;
+        color: #fff;
+      }
+    }
+  }
+}
