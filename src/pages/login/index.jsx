@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 import Swal from "sweetalert2";
 
 import Layout from "../../components/Layout";
@@ -22,7 +23,8 @@ const Login = () => {
         confirmButtonColor: "#0d9488",
       }).then((res) => {
         if (res.isConfirmed) {
-          navigate("/");
+          Cookies.set("username", username);
+          navigate("/efishery/list_comodity");
         }
       });
     } else {
